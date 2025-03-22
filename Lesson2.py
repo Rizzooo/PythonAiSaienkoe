@@ -1,27 +1,38 @@
+import random
+
 class Student:
-    amount_of_student = 0
-    print("Hi")
-
-    def __init__(self, scholarship=50):
-        self.height = 170
-        print("I am alive!")
-        Student.amount_of_student += 1
+    def __init__(self, name, money=100, scholarship=50):
+        self.name = name
+        self.money = money
         self.scholarship = scholarship
-        self.scholarship += 100
+        self.knowledge = 0
+        self.fatigue = 0
 
-print("*" * 10 + "Tom" + "_" * 10, sep="")
-tom = Student(scholarship=100)
-print(tom.amount_of_student)
-print(f"scholarship Tom - {tom.scholarship}")
+    def study(self):
+        self.knowledge += 10
+        self.fatigue += 15
 
-print("*" * 10 + "Bill" + "_" * 10, sep="")
-bill = Student()
-print(bill.amount_of_student)
-print(f"scholarship Bill - {bill.scholarship}")
+    def work(self):
+        self.money += 100
+        self.fatigue += 20
 
-print(f"height Tom - {tom.height}")
-print(f"height Bill - {bill.height}")
-tom.height += 10
-print('-' * 30)
-print(f"height Tom - {tom.height}")
-print(f"height Bill - {bill.height}")
+    def rest(self):
+        self.fatigue = max(0, self.fatigue - 30)
+
+    def live_month(self):
+        self.money += self.scholarship
+        if self.money < 50:
+            self.work()
+        elif self.knowledge < 100:
+            self.study()
+        else:
+            self.rest()
+
+    def live_year(self):
+        for _ in range(12):
+            self.live_month()
+        print(f"{self.name} завершив год Знання: {self.knowledge}, Гроші{self.money}")
+
+
+student = Student("Мопс")
+student.live_year()
